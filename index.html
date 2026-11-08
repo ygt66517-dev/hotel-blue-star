@@ -1,0 +1,609 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Hotel Blue Star</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Mulish:wght@400;600;700;800&display=swap">
+<style>
+/* Layout: full-bleed hero with crossfading photo slideshow, scrolling service ticker, stay / parties / catering story blocks, photo wall, WhatsApp enquiry form with three tabs, floating WhatsApp button. Navy and star-blue from the logo, brass for stars and highlights. */
+:root {
+  --bg: #F4F7FB;
+  --surface: #FFFFFF;
+  --fg: #0E1F3D;
+  --muted: #53627D;
+  --line: #D6DEEB;
+  --navy: #0B2A5B;
+  --navy-deep: #071A3A;
+  --star: #1E6BD6;
+  --brass: #C8962E;
+  --head: #0B2A5B;
+  --on-navy: #F4F7FB;
+  --wa: #1FA855;
+  --on-wa: #FFFFFF;
+  --font-display: "Marcellus", Georgia, "Times New Roman", serif;
+  --font-body: "Mulish", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --gx: max(16px, env(safe-area-inset-left, 0px));
+  --gy: max(16px, env(safe-area-inset-right, 0px));
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #08142B; --surface: #0F2145; --fg: #EAF0FA; --muted: #A3B2CE; --line: #223660;
+    --navy: #0F2145; --navy-deep: #050E21; --star: #5B9BF5; --brass: #E0B04F; --head: #EAF0FA;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #08142B; --surface: #0F2145; --fg: #EAF0FA; --muted: #A3B2CE; --line: #223660;
+  --navy: #0F2145; --navy-deep: #050E21; --star: #5B9BF5; --brass: #E0B04F; --head: #EAF0FA;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.6;
+  padding-left: var(--gx); padding-right: var(--gy); padding-block: 0;
+  overflow-x: hidden;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--surface); }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.12; text-wrap: balance; margin: 0; }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--star); outline-offset: 2px; }
+.wrap { max-width: 1100px; margin: 0 auto; }
+.bleed { margin-left: calc(-1 * var(--gx)); margin-right: calc(-1 * var(--gy)); padding-left: var(--gx); padding-right: var(--gy); }
+.eyebrow { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 800; color: var(--star); }
+.sec-title { font-size: clamp(28px, 4.2vw, 44px); color: var(--head); margin-top: 10px; }
+.sec-lead { color: var(--muted); margin-top: 12px; max-width: 58ch; }
+section.block { padding-block: 70px; }
+
+/* buttons */
+.btn {
+  position: relative; overflow: hidden;
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  background: var(--wa); color: var(--on-wa); border: 0; border-radius: 999px;
+  padding: 13px 24px; font: 800 15px var(--font-body); text-decoration: none; cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.btn::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.45) 50%, transparent 70%); transform: translateX(-120%); }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 10px 22px -10px rgba(31, 168, 85, 0.8); }
+.btn:hover::after { transform: translateX(120%); transition: transform 0.8s ease; }
+.btn svg { width: 19px; height: 19px; fill: currentColor; flex: none; }
+.btn.small { padding: 9px 16px; font-size: 14px; }
+.btn.ghost { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.7); }
+.btn.ghost:hover { background: rgba(255,255,255,0.12); box-shadow: none; }
+.btn.line { background: transparent; color: var(--head); border: 1.5px solid var(--line); }
+.btn.line:hover { border-color: var(--star); box-shadow: none; }
+
+/* header */
+header.top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 9px; }
+.logo { display: flex; align-items: center; gap: 12px; text-decoration: none; min-width: 0; }
+.logo svg { width: 44px; height: 44px; flex: none; }
+.logo .spin { transform-origin: 32px 33px; animation: spin 14s linear infinite; }
+.logo b { display: block; font-family: var(--font-display); font-weight: 400; font-size: 20px; letter-spacing: 0.07em; color: var(--head); line-height: 1.1; }
+.logo small { display: block; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+nav.links { display: flex; gap: 24px; }
+nav.links a { text-decoration: none; font-size: 14px; font-weight: 700; color: var(--muted); position: relative; padding-block: 4px; }
+nav.links a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--star); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+nav.links a:hover { color: var(--head); }
+nav.links a:hover::after { transform: scaleX(1); }
+@media (max-width: 860px) { nav.links { display: none; } }
+@media (max-width: 420px) { .logo small { display: none; } .btn.small { padding: 9px 13px; } }
+
+/* hero */
+.hero { position: relative; color: #fff; isolation: isolate; overflow: hidden; background: var(--navy-deep); }
+.slides { position: absolute; inset: 0; z-index: -2; }
+.slide { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; animation: slide 28s linear infinite both; }
+.slide:nth-child(1) { background-image: url("lobby.jpg"); animation-name: slide-first; background-position: center 55%; }
+.slide:nth-child(2) { background-image: url("catering.jpg"); animation-delay: 7s; background-position: center 45%; }
+.slide:nth-child(3) { background-image: url("room.jpg"); animation-delay: 14s; }
+.slide:nth-child(4) { background-image: url("exterior.jpg"); animation-delay: 21s; background-position: center 28%; }
+.hero::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(100deg, rgba(5, 16, 40, 0.92) 8%, rgba(7, 26, 58, 0.72) 55%, rgba(7, 26, 58, 0.45)); }
+.twinkle { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.twinkle i { position: absolute; width: 14px; height: 14px; background: var(--brass); clip-path: polygon(50% 0, 62% 36%, 100% 38%, 70% 60%, 80% 100%, 50% 76%, 20% 100%, 30% 60%, 0 38%, 38% 36%); animation: tw 3.6s ease-in-out infinite; opacity: 0; }
+.hero-in { padding-block: 84px 92px; display: grid; gap: 22px; max-width: 700px; }
+.hero .eyebrow { color: var(--brass); display: flex; align-items: center; gap: 10px; }
+.hero .eyebrow::before { content: ""; width: 34px; height: 2px; background: var(--brass); animation: grow 1s 0.2s both; }
+.hero h1 { font-size: clamp(40px, 7.4vw, 78px); letter-spacing: 0.005em; }
+.hero h1 span { display: block; animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.hero h1 span:nth-child(2) { animation-delay: 0.15s; color: #8EBBFF; }
+.hero h1 span:nth-child(3) { animation-delay: 0.3s; color: var(--brass); }
+.hero p.lead { font-size: 18px; color: #D5E1F5; max-width: 52ch; animation: rise 0.9s 0.45s both; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; animation: rise 0.9s 0.6s both; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; animation: rise 0.9s 0.75s both; }
+.chip { border: 1px solid rgba(255,255,255,0.35); background: rgba(255,255,255,0.08); border-radius: 999px; padding: 6px 14px; font-size: 13px; font-weight: 700; backdrop-filter: blur(4px); }
+.chip i { font-style: normal; color: var(--brass); margin-right: 6px; }
+.dots { position: absolute; right: var(--gy); bottom: 22px; display: flex; gap: 8px; }
+.dots b { width: 26px; height: 3px; background: rgba(255,255,255,0.3); border-radius: 2px; overflow: hidden; position: relative; }
+.dots b::after { content: ""; position: absolute; inset: 0; background: var(--brass); transform: scaleX(0); transform-origin: left; animation: bar 28s linear infinite; }
+.dots b:nth-child(2)::after { animation-delay: 7s; }
+.dots b:nth-child(3)::after { animation-delay: 14s; }
+.dots b:nth-child(4)::after { animation-delay: 21s; }
+
+/* ticker */
+.ticker { background: var(--navy); color: var(--on-navy, #F4F7FB); overflow: hidden; border-block: 1px solid rgba(255,255,255,0.08); }
+.track { display: flex; width: max-content; animation: marq 32s linear infinite; padding-block: 14px; }
+.ticker:hover .track { animation-play-state: paused; }
+.track span { font-family: var(--font-display); font-size: 19px; letter-spacing: 0.06em; padding-inline: 22px; display: flex; align-items: center; gap: 44px; white-space: nowrap; color: #EAF0FA; }
+.track span::after { content: "★"; color: var(--brass); font-size: 13px; }
+
+/* services */
+.services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 34px; }
+.svc { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 26px; min-width: 0; transition: transform 0.35s ease, border-color 0.35s, box-shadow 0.35s; }
+.svc:hover { transform: translateY(-6px); border-color: var(--star); box-shadow: 0 22px 36px -26px rgba(11, 42, 91, 0.55); }
+.svc .ico { width: 48px; height: 48px; border-radius: 50%; background: var(--navy); display: grid; place-items: center; margin-bottom: 16px; transition: transform 0.5s; }
+.svc:hover .ico { transform: rotate(-12deg) scale(1.08); }
+.svc .ico svg { width: 23px; height: 23px; fill: none; stroke: #F4F7FB; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.svc h3 { font-size: 22px; margin-bottom: 8px; color: var(--head); }
+.svc p { color: var(--muted); font-size: 15px; }
+.tag { display: inline-block; margin-top: 14px; font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #fff; background: var(--brass); border-radius: 999px; padding: 4px 11px; }
+@media (max-width: 900px) { .services { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 580px) { .services { grid-template-columns: 1fr; } }
+
+/* split story blocks */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 54px; align-items: center; }
+.split > * { min-width: 0; }
+.split.flip .pic { order: 2; }
+@media (max-width: 860px) { .split { grid-template-columns: 1fr; gap: 28px; } .split.flip .pic { order: 0; } }
+.pic { position: relative; }
+.pic .frame { border-radius: 16px; overflow: hidden; aspect-ratio: 4 / 4.4; background: var(--navy); box-shadow: 0 30px 50px -34px rgba(7, 26, 58, 0.8); }
+.pic img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.4s ease; }
+.pic:hover img { transform: scale(1.06); }
+.pic .badge { position: absolute; left: -12px; bottom: 22px; background: var(--brass); color: #fff; font-weight: 800; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; padding: 10px 16px; border-radius: 8px; animation: bob 4s ease-in-out infinite; max-width: calc(100% - 8px); }
+@media (max-width: 580px) { .pic .badge { left: 8px; } }
+.list { list-style: none; padding: 0; margin: 22px 0 26px; display: grid; gap: 9px; }
+.list li { display: flex; gap: 12px; align-items: baseline; }
+.list li::before { content: "★"; color: var(--brass); font-size: 12px; flex: none; }
+
+/* rooms */
+.roomlist { display: grid; gap: 12px; margin: 24px 0 26px; }
+.rm { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; display: grid; grid-template-columns: 1fr auto; gap: 4px 14px; align-items: center; transition: transform 0.3s, border-color 0.3s; }
+.rm:hover { transform: translateX(6px); border-color: var(--star); }
+.rm h3 { font-size: 20px; color: var(--head); }
+.rm p { color: var(--muted); font-size: 14px; grid-column: 1; }
+.rm .btn { grid-row: 1 / span 2; grid-column: 2; }
+@media (max-width: 480px) { .rm { grid-template-columns: 1fr; } .rm .btn { grid-row: auto; grid-column: 1; justify-self: start; margin-top: 8px; } }
+
+/* parties band */
+.party { background: var(--navy-deep); color: #fff; position: relative; overflow: hidden; isolation: isolate; }
+.party::before { content: ""; position: absolute; width: 520px; height: 520px; right: -140px; top: -180px; z-index: -1; border-radius: 50%; background: radial-gradient(circle, rgba(30, 107, 214, 0.5), transparent 65%); animation: drift 12s ease-in-out infinite alternate; }
+.party .sec-title { color: #fff; }
+.party .sec-lead { color: #BCCBE6; }
+.party .eyebrow { color: var(--brass); }
+.events { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.ev { border: 1.5px solid rgba(255,255,255,0.3); border-radius: 999px; padding: 11px 22px; font-weight: 700; font-size: 15px; display: inline-flex; align-items: center; gap: 9px; cursor: default; transition: background 0.3s, color 0.3s, transform 0.3s, border-color 0.3s; animation: float 5s ease-in-out infinite; }
+.ev:nth-child(2n) { animation-delay: -1.2s; }
+.ev:nth-child(3n) { animation-delay: -2.4s; }
+.ev:nth-child(5n) { animation-delay: -3.5s; }
+.ev:hover { background: var(--brass); border-color: var(--brass); color: #fff; transform: scale(1.06); }
+.ev i { font-style: normal; color: var(--brass); transition: color 0.3s; }
+.ev:hover i { color: #fff; }
+.party .cta-row { margin-top: 34px; animation: none; }
+
+/* photo wall */
+.wall { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 34px; }
+.wall figure { margin: 0; border-radius: 14px; overflow: hidden; position: relative; aspect-ratio: 3 / 4; background: var(--navy); min-width: 0; }
+.wall img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1s ease; }
+.wall figure:hover img { transform: scale(1.1); }
+.wall figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 38px 14px 12px; color: #fff; font-size: 13px; font-weight: 700; background: linear-gradient(transparent, rgba(5, 14, 33, 0.85)); transform: translateY(40%); opacity: 0; transition: 0.4s; }
+.wall figure:hover figcaption, .wall figure:focus-within figcaption { transform: none; opacity: 1; }
+@media (hover: none) { .wall figcaption { transform: none; opacity: 1; } }
+@media (max-width: 860px) { .wall { grid-template-columns: 1fr 1fr; } }
+
+/* enquiry */
+.enq { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 30px; box-shadow: 0 30px 50px -38px rgba(11, 42, 91, 0.6); max-width: 760px; margin: 34px auto 0; }
+.tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; background: var(--bg); border-radius: 999px; padding: 5px; margin-bottom: 22px; }
+.tabs button { border: 0; background: transparent; color: var(--muted); font: 800 14px var(--font-body); padding: 11px 8px; border-radius: 999px; cursor: pointer; transition: background 0.3s, color 0.3s; }
+.tabs button[aria-selected="true"] { background: var(--navy); color: #fff; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; min-width: 0; }
+.field label { font-size: 12px; font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); }
+.field input, .field select { width: 100%; font: 16px var(--font-body); color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 12px 13px; transition: border-color 0.2s, box-shadow 0.2s; }
+.field input:focus, .field select:focus { border-color: var(--star); box-shadow: 0 0 0 3px color-mix(in srgb, var(--star) 25%, transparent); outline: none; }
+.enq .btn { width: 100%; margin-top: 6px; }
+.enq .note { font-size: 13px; color: var(--muted); margin-top: 12px; text-align: center; }
+.panel[hidden] { display: none; }
+.panel { animation: rise 0.45s both; }
+@media (max-width: 520px) { .grid2 { grid-template-columns: 1fr; } .enq { padding: 22px 18px; } }
+
+/* contact */
+.contact { display: grid; grid-template-columns: 1.2fr 1fr; gap: 26px; align-items: stretch; margin-top: 34px; }
+.contact > * { min-width: 0; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 28px; }
+.numrow { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 8px 0 20px; }
+.num { font-family: var(--font-display); font-size: 32px; color: var(--head); font-variant-numeric: tabular-nums; }
+.copy { background: transparent; border: 1px solid var(--line); color: var(--fg); border-radius: 999px; padding: 7px 14px; font: 700 13px var(--font-body); cursor: pointer; }
+.social { display: grid; gap: 14px; }
+.social a { display: flex; align-items: center; gap: 16px; text-decoration: none; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; transition: transform 0.3s, border-color 0.3s; }
+.social a:hover { transform: translateX(6px); border-color: var(--star); }
+.social svg { width: 28px; height: 28px; flex: none; fill: none; stroke: var(--star); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.social svg.fb { fill: var(--star); stroke: none; }
+.social b { display: block; font-size: 16px; }
+.social small { color: var(--muted); font-size: 13px; }
+@media (max-width: 760px) { .contact { grid-template-columns: 1fr; } }
+
+footer { border-top: 1px solid var(--line); padding-block: 26px 90px; color: var(--muted); font-size: 14px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
+
+/* floating whatsapp */
+.fab { position: fixed; right: calc(14px + env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 55; width: 58px; height: 58px; border-radius: 50%; background: var(--wa); color: #fff; display: grid; place-items: center; box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.5); text-decoration: none; }
+.fab svg { width: 30px; height: 30px; fill: currentColor; }
+.fab::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--wa); z-index: -1; animation: pulse 2.2s ease-out infinite; }
+
+/* reveal */
+.rv { transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1); transition-delay: var(--d, 0s); }
+.rv.pre { opacity: 0; transform: translateY(30px); }
+
+@keyframes slide-first { 0% { opacity: 1; transform: scale(1); } 25% { opacity: 1; transform: scale(1.1); } 29% { opacity: 0; transform: scale(1.12); } 96% { opacity: 0; transform: scale(1); } 100% { opacity: 1; transform: scale(1); } }
+@keyframes slide { 0% { opacity: 0; transform: scale(1); } 4% { opacity: 1; } 25% { opacity: 1; transform: scale(1.1); } 29% { opacity: 0; transform: scale(1.12); } 100% { opacity: 0; transform: scale(1.12); } }
+@keyframes bar { 0% { transform: scaleX(0); } 25% { transform: scaleX(1); } 25.1%, 100% { transform: scaleX(0); } }
+@keyframes rise { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+@keyframes grow { from { width: 0; } to { width: 34px; } }
+@keyframes tw { 0%, 100% { opacity: 0; transform: scale(0.4) rotate(0); } 50% { opacity: 0.95; transform: scale(1) rotate(25deg); } }
+@keyframes marq { to { transform: translateX(-50%); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes drift { to { transform: translate(-60px, 50px) scale(1.15); } }
+@keyframes pulse { from { transform: scale(1); opacity: 0.55; } to { transform: scale(1.7); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .slide:nth-child(1) { opacity: 1; }
+  .track { overflow-x: auto; }
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="wa" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.1a8.1 8.1 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.1 8.1 0 1 1 12 20.1zm4.5-6c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.600 6.600 0 0 1-3.300-2.900c-.2-.4.2-.4.700-1.300.1-.2 0-.3 0-.5l-.8-1.800c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.300 3 3 0 0 0-.9 2.200c0 1.300.9 2.500 1 2.700.1.200 1.800 2.800 4.400 3.900 1.600.7 2.300.7 3.100.6.500-.1 1.500-.6 1.700-1.200.2-.6.200-1.100.2-1.200-.1-.2-.3-.2-.5-.3z"/></symbol>
+</svg>
+
+<header class="top bleed">
+  <div class="wrap bar">
+    <a class="logo" href="#top" aria-label="Hotel Blue Star home">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <circle cx="32" cy="32" r="30" fill="none" stroke="var(--star)" stroke-width="2.5"/>
+        <path class="spin" d="M32 12l5.6 13.4L52 26.6l-11 9.4 3.4 14L32 42.6 19.6 50l3.4-14-11-9.4 14.4-1.2z" fill="var(--star)"/>
+      </svg>
+      <span><b>BLUE STAR</b><small>Hotel</small></span>
+    </a>
+    <nav class="links" aria-label="Sections">
+      <a href="#stay">Stay</a>
+      <a href="#rooms">Rooms</a>
+      <a href="#parties">Parties</a>
+      <a href="#catering">Catering</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn small" data-wa href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#wa"/></svg>Book on WhatsApp</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero bleed">
+    <div class="slides" aria-hidden="true"><div class="slide"></div><div class="slide"></div><div class="slide"></div><div class="slide"></div></div>
+    <div class="twinkle" aria-hidden="true" id="tw"></div>
+    <div class="wrap"><div class="hero-in">
+      <span class="eyebrow">Hotel Blue Star</span>
+      <h1><span>Stay with us.</span><span>Party with us.</span><span>We cater anywhere.</span></h1>
+      <p class="lead">Comfortable rooms with free breakfast, an evening bar, parties of every kind, and outdoor catering at your own venue. Book everything on WhatsApp.</p>
+      <div class="cta-row">
+        <a class="btn" data-wa href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#wa"/></svg>Book on WhatsApp</a>
+        <a class="btn ghost" href="#enquire">Plan a party or catering</a>
+      </div>
+      <div class="chips">
+        <span class="chip"><i>★</i>Room stay</span>
+        <span class="chip"><i>★</i>Bar</span>
+        <span class="chip"><i>★</i>Free breakfast</span>
+        <span class="chip"><i>★</i>Parties</span>
+        <span class="chip"><i>★</i>Outdoor catering</span>
+      </div>
+    </div></div>
+    <div class="dots" aria-hidden="true"><b></b><b></b><b></b><b></b></div>
+  </section>
+
+  <div class="ticker bleed" aria-label="Our services">
+    <div class="track" id="track" aria-hidden="true">
+      <span>Room stay</span><span>Free morning breakfast</span><span>Hotel bar</span><span>Birthday parties</span><span>Wedding functions</span><span>Outdoor catering</span><span>Corporate events</span>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="block" id="stay">
+      <div class="rv"><span class="eyebrow">Everything in one place</span>
+      <h2 class="sec-title">Stay, celebrate and feast at Blue Star</h2>
+      <p class="sec-lead">One hotel for your trip, your evening and your function. Tell us what you need on WhatsApp and we sort the rest.</p></div>
+      <div class="services">
+        <article class="svc rv" style="--d:0s">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 18v-7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v7M3 18h18M3 21v-3M21 21v-3M6 9V6a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v3"/></svg></div>
+          <h3>Room stay</h3><p>Clean, quiet air-conditioned rooms with comfortable beds and fresh linen.</p>
+        </article>
+        <article class="svc rv" style="--d:0.08s">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 11h13v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5zM17 12h1.500a2.500 2.500 0 0 1 0 5H17M8 3v4M12 3v4"/></svg></div>
+          <h3>Free breakfast</h3><p>A morning meal comes with every room stay at no extra charge.</p><span class="tag">Free for guests</span>
+        </article>
+        <article class="svc rv" style="--d:0.16s">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M5 4h14l-7 9zM12 13v7M8 20h8"/></svg></div>
+          <h3>Bar</h3><p>Unwind with a drink at our in-house bar after a long day.</p>
+        </article>
+        <article class="svc rv" style="--d:0s">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l2.200 4.600 5 .7-3.600 3.500.9 5-4.500-2.400-4.500 2.400.9-5L4.800 8.300l5-.7zM6 21h12"/></svg></div>
+          <h3>Parties</h3><p>Birthdays, weddings, engagements, corporate events. All kinds of parties are available.</p><span class="tag">All parties</span>
+        </article>
+        <article class="svc rv" style="--d:0.08s">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M6 14a4 4 0 0 1 1.500-7.700A5 5 0 0 1 17 7a3.500 3.500 0 0 1 .5 7zM6 14v6h12v-6M9 17h6"/></svg></div>
+          <h3>Outdoor catering</h3><p>Our team comes to your venue with food, live counters and service.</p><span class="tag">At your venue</span>
+        </article>
+        <article class="svc rv" style="--d:0.16s">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3.500-7.100L21 3v5h-5M8.500 12.500l2.500 2.500 4.500-5"/></svg></div>
+          <h3>Booking on WhatsApp</h3><p>Send one message. We reply with availability, menu and rates.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="block" id="rooms" style="padding-top:10px">
+      <div class="split">
+        <div class="pic rv">
+          <div class="frame" style="aspect-ratio: 4 / 3.4"><img src="room.jpg" alt="Double room with a bed, two armchairs and a tea table" loading="lazy"></div>
+          <span class="badge">Breakfast included</span>
+        </div>
+        <div class="rv" style="--d:0.1s">
+          <span class="eyebrow">Rooms</span>
+          <h2 class="sec-title">A good night's sleep, a free breakfast in the morning</h2>
+          <div class="roomlist">
+            <div class="rm"><h3>Standard Room</h3><p>Double bed, 1 to 2 guests</p><a class="btn small line" data-wa-room="Standard Room" href="#" target="_blank" rel="noopener">Ask rate</a></div>
+            <div class="rm"><h3>Deluxe Room</h3><p>More space and a seating area</p><a class="btn small line" data-wa-room="Deluxe Room" href="#" target="_blank" rel="noopener">Ask rate</a></div>
+            <div class="rm"><h3>Family Room</h3><p>Extra beds, 3 to 5 guests</p><a class="btn small line" data-wa-room="Family Room" href="#" target="_blank" rel="noopener">Ask rate</a></div>
+          </div>
+          <p class="sec-lead" style="margin-top:0">Rates change by date and season. Message us for today's price.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="party bleed" id="parties">
+    <div class="wrap block">
+      <div class="rv"><span class="eyebrow">Parties</span>
+      <h2 class="sec-title">Every kind of party is available</h2>
+      <p class="sec-lead">Tell us the occasion, the date and the number of guests. We plan the food and the service with you.</p></div>
+      <div class="events rv" style="--d:0.1s">
+        <span class="ev"><i>★</i>Birthday parties</span>
+        <span class="ev"><i>★</i>Wedding functions</span>
+        <span class="ev"><i>★</i>Engagement</span>
+        <span class="ev"><i>★</i>Reception</span>
+        <span class="ev"><i>★</i>Baby shower</span>
+        <span class="ev"><i>★</i>Anniversary</span>
+        <span class="ev"><i>★</i>Corporate events</span>
+        <span class="ev"><i>★</i>Family get-together</span>
+        <span class="ev"><i>★</i>Festival functions</span>
+        <span class="ev"><i>★</i>Get-together</span>
+      </div>
+      <div class="cta-row">
+        <a class="btn" data-wa-party href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#wa"/></svg>Book a party on WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="block" id="catering">
+      <div class="split flip">
+        <div class="pic rv">
+          <div class="frame"><img src="catering.jpg" alt="Hotel Blue Star Catering fruit counter with chefs and decorated fruit displays" loading="lazy"></div>
+          <span class="badge">Hotel Blue Star Catering</span>
+        </div>
+        <div class="rv" style="--d:0.1s">
+          <span class="eyebrow">Outdoor catering</span>
+          <h2 class="sec-title">We bring the feast to your venue</h2>
+          <p class="sec-lead">Weddings, house functions, office events and open-air parties. Our chefs set up at your place, from a simple buffet to live and fruit counters.</p>
+          <ul class="list">
+            <li>Full outdoor catering for any function</li>
+            <li>Live counters and decorated fruit displays</li>
+            <li>Chefs and service staff in uniform</li>
+            <li>Menu planned with you before the day</li>
+          </ul>
+          <a class="btn" data-wa-cat href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#wa"/></svg>Get a catering quote</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" style="padding-top:0">
+      <div class="rv"><span class="eyebrow">Take a look</span>
+      <h2 class="sec-title">Inside Hotel Blue Star</h2></div>
+      <div class="wall">
+        <figure class="rv" style="--d:0s"><img src="lobby.jpg" alt="Reception desk and lobby seating" loading="lazy"><figcaption>Reception and lobby</figcaption></figure>
+        <figure class="rv" style="--d:0.08s"><img src="shrine.jpg" alt="Lobby shrine with a tall brass lamp and flower bowl" loading="lazy"><figcaption>Lobby with brass lamp</figcaption></figure>
+        <figure class="rv" style="--d:0.16s"><img src="exterior.jpg" alt="Hotel building lit up at night" loading="lazy" style="object-position:center 20%"><figcaption>The hotel at night</figcaption></figure>
+        <figure class="rv" style="--d:0.24s"><img src="catering.jpg" alt="Outdoor catering fruit counter" loading="lazy"><figcaption>Outdoor catering</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="block" id="enquire" style="padding-top:20px">
+      <div class="rv" style="text-align:center"><span class="eyebrow">Enquire</span>
+      <h2 class="sec-title">Tell us what you need</h2>
+      <p class="sec-lead" style="margin-inline:auto">Fill this in and WhatsApp opens with your message ready to send.</p></div>
+
+      <form class="enq rv" id="enqForm" aria-label="Enquiry form">
+        <div class="tabs" role="tablist" aria-label="Enquiry type">
+          <button type="button" role="tab" id="tab-stay" aria-selected="true" aria-controls="p-stay" data-tab="stay">Room stay</button>
+          <button type="button" role="tab" id="tab-party" aria-selected="false" aria-controls="p-party" data-tab="party">Party</button>
+          <button type="button" role="tab" id="tab-cat" aria-selected="false" aria-controls="p-cat" data-tab="cat">Catering</button>
+        </div>
+        <div class="field"><label for="name">Your name</label><input id="name" type="text" autocomplete="name" placeholder="Full name"></div>
+
+        <div class="panel" id="p-stay" role="tabpanel" aria-labelledby="tab-stay">
+          <div class="grid2">
+            <div class="field"><label for="checkin">Check-in</label><input id="checkin" type="date"></div>
+            <div class="field"><label for="checkout">Check-out</label><input id="checkout" type="date"></div>
+          </div>
+          <div class="grid2">
+            <div class="field"><label for="sguests">Guests</label><select id="sguests"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5+</option></select></div>
+            <div class="field"><label for="room">Room</label><select id="room"><option>Standard Room</option><option>Deluxe Room</option><option>Family Room</option></select></div>
+          </div>
+        </div>
+
+        <div class="panel" id="p-party" role="tabpanel" aria-labelledby="tab-party" hidden>
+          <div class="grid2">
+            <div class="field"><label for="pevent">Occasion</label>
+              <select id="pevent"><option>Birthday party</option><option>Wedding function</option><option>Engagement</option><option>Reception</option><option>Baby shower</option><option>Anniversary</option><option>Corporate event</option><option>Family get-together</option><option>Other</option></select></div>
+            <div class="field"><label for="pdate">Party date</label><input id="pdate" type="date"></div>
+          </div>
+          <div class="field"><label for="pguests">Number of guests</label><input id="pguests" type="number" min="1" inputmode="numeric" placeholder="For example 50"></div>
+        </div>
+
+        <div class="panel" id="p-cat" role="tabpanel" aria-labelledby="tab-cat" hidden>
+          <div class="grid2">
+            <div class="field"><label for="cevent">Function</label>
+              <select id="cevent"><option>Wedding</option><option>Birthday</option><option>House function</option><option>Corporate event</option><option>Open-air party</option><option>Other</option></select></div>
+            <div class="field"><label for="cdate">Function date</label><input id="cdate" type="date"></div>
+          </div>
+          <div class="grid2">
+            <div class="field"><label for="cguests">Number of guests</label><input id="cguests" type="number" min="1" inputmode="numeric" placeholder="For example 200"></div>
+            <div class="field"><label for="cplace">Venue location</label><input id="cplace" type="text" placeholder="Area or town"></div>
+          </div>
+        </div>
+
+        <a class="btn" id="sendWa" href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#wa"/></svg>Send on WhatsApp</a>
+        <p class="note">Opens WhatsApp in a new tab. We reply with availability and rates.</p>
+      </form>
+    </section>
+
+    <section class="block" id="contact" style="padding-top:20px">
+      <div class="rv"><span class="eyebrow">Contact</span>
+      <h2 class="sec-title">Book fast on WhatsApp</h2></div>
+      <div class="contact">
+        <div class="card rv">
+          <p style="color:var(--muted)">WhatsApp number for bookings</p>
+          <div class="numrow"><span class="num" id="numText">+91 00000 00000</span><button class="copy" type="button" id="copyBtn">Copy number</button></div>
+          <a class="btn" data-wa href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#wa"/></svg>Chat with us now</a>
+        </div>
+        <div class="social rv" style="--d:0.1s">
+          <a data-ig href="#" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.200" cy="6.800" r="0.800"/></svg>
+            <span><b>Instagram</b><small>Photos and updates</small></span>
+          </a>
+          <a data-fb href="#" target="_blank" rel="noopener">
+            <svg class="fb" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8V6.500c0-.7.300-1 1-1h2V2h-3c-3 0-4 1.800-4 4v2H7v3.500h3V22h4v-10.500h2.800L17.300 8z"/></svg>
+            <span><b>Facebook</b><small>Follow our page</small></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>© Hotel Blue Star. Room stay, bar, free breakfast, parties and outdoor catering.</span>
+      <span>Message us on WhatsApp to book.</span>
+    </footer>
+  </div>
+</main>
+
+<a class="fab" data-wa href="#" target="_blank" rel="noopener" aria-label="Book on WhatsApp"><svg aria-hidden="true"><use href="#wa"/></svg></a>
+
+<script>
+// EDIT THESE THREE LINES with your real details.
+var WHATSAPP = "919999999999";                           // country code + number, digits only
+var INSTAGRAM = "https://www.instagram.com/hotelbluestar";
+var FACEBOOK = "https://www.facebook.com/hotelbluestar";
+
+function waLink(text) { return "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(text); }
+function prettyNumber(n) {
+  var d = String(n).replace(/\D/g, "");
+  if (d.length > 10) { var cc = d.slice(0, d.length - 10), r = d.slice(-10); return "+" + cc + " " + r.slice(0, 5) + " " + r.slice(5); }
+  return "+" + d;
+}
+function $(s) { return document.querySelector(s); }
+function $$(s) { return [].slice.call(document.querySelectorAll(s)); }
+
+$$("[data-wa]").forEach(function (a) { a.href = waLink("Hello Hotel Blue Star, I would like to book a room."); });
+$$("[data-wa-room]").forEach(function (a) { a.href = waLink("Hello Hotel Blue Star, please share the rate and availability for a " + a.getAttribute("data-wa-room") + "."); });
+$$("[data-wa-party]").forEach(function (a) { a.href = waLink("Hello Hotel Blue Star, I would like to book a party. Please share the details."); });
+$$("[data-wa-cat]").forEach(function (a) { a.href = waLink("Hello Hotel Blue Star, I need outdoor catering for a function. Please share a quote."); });
+$("[data-ig]").href = INSTAGRAM;
+$("[data-fb]").href = FACEBOOK;
+$("#numText").textContent = prettyNumber(WHATSAPP);
+
+// duplicate the ticker content so it loops without a gap
+var track = $("#track");
+track.innerHTML = track.innerHTML + track.innerHTML;
+
+// twinkling stars in the hero
+var tw = $("#tw");
+for (var i = 0; i < 14; i++) {
+  var s = document.createElement("i");
+  s.style.left = (Math.random() * 96).toFixed(1) + "%";
+  s.style.top = (Math.random() * 90).toFixed(1) + "%";
+  s.style.animationDelay = (Math.random() * 3.6).toFixed(2) + "s";
+  s.style.animationDuration = (2.6 + Math.random() * 2.4).toFixed(2) + "s";
+  var z = 8 + Math.random() * 12; s.style.width = z + "px"; s.style.height = z + "px";
+  tw.appendChild(s);
+}
+
+// enquiry tabs and message
+var current = "stay";
+var ci = $("#checkin"), co = $("#checkout");
+var today = new Date().toISOString().slice(0, 10);
+ci.min = today; co.min = today; $("#pdate").min = today; $("#cdate").min = today;
+ci.addEventListener("change", function () { co.min = ci.value || today; if (co.value && co.value < co.min) co.value = ""; });
+
+function setTab(t) {
+  current = t;
+  $$("[data-tab]").forEach(function (b) { b.setAttribute("aria-selected", b.getAttribute("data-tab") === t ? "true" : "false"); });
+  $("#p-stay").hidden = t !== "stay"; $("#p-party").hidden = t !== "party"; $("#p-cat").hidden = t !== "cat";
+  updateMsg();
+}
+function updateMsg() {
+  var name = $("#name").value.trim(), L = [];
+  if (current === "stay") {
+    L.push("Hello Hotel Blue Star, I would like to book a room.");
+    if (name) L.push("Name: " + name);
+    if (ci.value) L.push("Check-in: " + ci.value);
+    if (co.value) L.push("Check-out: " + co.value);
+    L.push("Guests: " + $("#sguests").value); L.push("Room: " + $("#room").value);
+  } else if (current === "party") {
+    L.push("Hello Hotel Blue Star, I would like to book a party.");
+    if (name) L.push("Name: " + name);
+    L.push("Occasion: " + $("#pevent").value);
+    if ($("#pdate").value) L.push("Date: " + $("#pdate").value);
+    if ($("#pguests").value) L.push("Guests: " + $("#pguests").value);
+  } else {
+    L.push("Hello Hotel Blue Star, I need outdoor catering.");
+    if (name) L.push("Name: " + name);
+    L.push("Function: " + $("#cevent").value);
+    if ($("#cdate").value) L.push("Date: " + $("#cdate").value);
+    if ($("#cguests").value) L.push("Guests: " + $("#cguests").value);
+    if ($("#cplace").value.trim()) L.push("Venue: " + $("#cplace").value.trim());
+  }
+  $("#sendWa").href = waLink(L.join("\n"));
+}
+$$("[data-tab]").forEach(function (b) { b.addEventListener("click", function () { setTab(b.getAttribute("data-tab")); }); });
+var form = $("#enqForm");
+form.addEventListener("input", updateMsg); form.addEventListener("change", updateMsg);
+form.addEventListener("submit", function (e) { e.preventDefault(); });
+updateMsg();
+
+// open the right tab from the hero and party buttons
+$$('a[href="#enquire"]').forEach(function (a) { a.addEventListener("click", function () { setTab("party"); }); });
+
+// copy number
+$("#copyBtn").addEventListener("click", function () {
+  var btn = this, text = prettyNumber(WHATSAPP);
+  function done() { btn.textContent = "Copied"; setTimeout(function () { btn.textContent = "Copy number"; }, 1800); }
+  function pick() { var r = document.createRange(); r.selectNodeContents($("#numText")); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+  try { navigator.clipboard.writeText(text).then(done, pick); } catch (err) { pick(); }
+});
+
+// scroll reveal: below-the-fold items start hidden, everything else is visible at rest
+var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+if ("IntersectionObserver" in window && !reduce) {
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.remove("pre"); io.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  $$(".rv").forEach(function (el) {
+    if (el.getBoundingClientRect().top > window.innerHeight) { el.classList.add("pre"); io.observe(el); }
+  });
+}
+</script>
+
+</body></html>
